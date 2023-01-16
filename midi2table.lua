@@ -111,7 +111,7 @@ end
 local midiReader = {}
 midiReader.__index = midiReader
 
-function midiReader.fromString(mstr)
+function midiReader.new(mstr)
    return setmetatable({
        file = mstr
    }, midiReader)
@@ -119,18 +119,15 @@ end
 
 function midiReader.fromHttp(url)
    local mstr = game:GetService("HttpService"):GetAsync(url)
-   return setmetatable({
-       file = mstr
-   }, midiReader)
+   return midiReader.new(mstr)
 end
 
 function midiReader:getHeader()
    self.header = readMIDIHeader(self.file)
-   return self.header
 end
 
-function midiReader:getNoteData(header)
-   return readMIDIData(self.file, header or self.header)
+function midiReader:getNoteData()
+   return readMIDIData(self.file, self.header)
 end
 
 return midiReader
