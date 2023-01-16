@@ -24,7 +24,7 @@ function readMIDIData(data, header)
         local track = {}
         -- Read the track chunk type
         local chunkType = string.sub(data, offset + 1, offset + 4)
-        assert(chunkTyle == "MTrk", "Invalid chunk track type")
+        assert(chunkType == "MTrk", "Invalid chunk track type")
         -- Read the track chunk length
         local chunkLength = string.unpack(">I4", string.sub(data, offset + 5, offset + 8))
         -- set the offset to the start of the track data
